@@ -1,0 +1,55 @@
+.order-details-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  text-align: center;
+}
+
+.order-details-container h1 {
+  margin-bottom: 10px;
+  font-size: 24px;
+  color: #333;
+}
+
+.order-details-container p {
+  margin: 5px 0;
+}
+
+.order-items {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.order-item {
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  text-align: left;
+}
+
+.order-item h3 {
+  margin-bottom: 10px;
+  font-size: 18px;
+}
+
+.order-item p {
+  margin: 5px 0;
+}
+
+.back-to-orders-btn {
+  margin-top: 20px;
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.back-to-orders-btn:hover {
+  background-color: #0056b3;
+}
