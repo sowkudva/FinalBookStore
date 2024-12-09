@@ -17,6 +17,9 @@ const ViewBook = () => {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
   const isLoggedIn = !!localStorage.getItem('token')
+  const isadmin =
+    !!localStorage.getItem('username') &&
+    localStorage.getItem('username') === 'admin'
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -96,6 +99,27 @@ const ViewBook = () => {
     ))
   }
 
+  const handleRemoveBook = async (bookId) => {
+    const token = localStorage.getItem('token')
+    try {
+      let response = await fetch(
+        `http://localhost:8800/api/v1/books/${bookId}`,
+        {
+          method: 'DELETE',
+          headers: {
+            auth: `Bearer ${token}`,
+            'Content-Type': 'application-json',
+          },
+        }
+      )
+      response = await response.json()
+      navigate('/')
+      alert('Book was deleted succesfully')
+    } catch (error) {
+      alert('Error Deleting current book')
+    }
+  }
+
   if (loading) return <div>Loading book details...</div>
   if (error) return <div>{error}</div>
 
@@ -117,12 +141,31 @@ const ViewBook = () => {
             <strong>Price:</strong> ${book.price}
           </p>
           <p>
-            <strong>Stock:</strong> {book.stock_qty} copies available
+            <strong>Stock:</strong> {book.stock_quantity} copies available
           </p>
           <p>
             <strong>Description:</strong>
             {book.description}
           </p>
+          {isLoggedIn && isadmin && (
+            <div
+              style={{
+                display: 'flex',
+                gap: '20px',
+
+                justifyContent: 'flex-end',
+                alignItems: 'flex-end',
+              }}
+            >
+              <button
+                className='remove-book'
+                onClick={() => handleRemoveBook(book.book_id)}
+              >
+                Remove
+              </button>
+              <button className='add-book'>Add New</button>
+            </div>
+          )}
         </div>
       </div>
 

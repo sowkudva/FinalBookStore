@@ -1,6 +1,8 @@
 import { Link, useNavigate } from 'react-router-dom'
 import './NavBar.css'
 import React, { useState } from 'react'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faArrowDown } from '@fortawesome/free-solid-svg-icons'
 
 const Navbar = () => {
   const isLoggedIn = !!localStorage.getItem('token')
@@ -11,8 +13,8 @@ const Navbar = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
   const navigate = useNavigate()
 
-  // Retrieve user name from localStorage (or state management if available)
-  const userName = localStorage.getItem('username') || 'User'
+  // Retrieve user name from localStorage
+  const userName = localStorage.getItem('username') || ''
 
   const handleLogout = () => {
     localStorage.removeItem('token')
@@ -45,7 +47,11 @@ const Navbar = () => {
             {isadmin ? <Link to='/orders/admin'>Order Management</Link> : <></>}
             <div className='user-menu-container'>
               <button className='nav-button' onClick={toggleDropdown}>
-                {userName} ▼
+                {userName}
+                <FontAwesomeIcon
+                  icon={faArrowDown}
+                  style={{ paddingLeft: '5px' }}
+                />
               </button>
               {isDropdownOpen && (
                 <div className='dropdown-menu'>

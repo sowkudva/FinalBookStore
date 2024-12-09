@@ -93,6 +93,26 @@
   cursor: pointer;
 }
 
+.add-book {
+  padding: 10px 20px;
+  margin-top: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.remove-book {
+  padding: 10px 20px;
+  margin-top: 10px;
+  background-color: #cf4b1b;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
 .write-review button:disabled {
   background-color: #aaa;
   cursor: not-allowed;
