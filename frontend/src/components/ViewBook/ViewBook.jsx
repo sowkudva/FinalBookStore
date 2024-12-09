@@ -1,5 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {
+  faStar,
+  faStar as faStarOutline,
+} from '@fortawesome/free-solid-svg-icons'
 import './ViewBook.css'
 
 const ViewBook = () => {
@@ -8,6 +13,7 @@ const ViewBook = () => {
   const [reviews, setReviews] = useState([])
   const [userReview, setUserReview] = useState(null)
   const [reviewText, setReviewText] = useState('')
+  const [reviewRating, setReviewRating] = useState(0)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
   const isLoggedIn = !!localStorage.getItem('token')
@@ -66,7 +72,7 @@ const ViewBook = () => {
             'Content-Type': 'application/json',
             auth: `Bearer ${token}`,
           },
-          body: JSON.stringify({ review: reviewText }),
+          body: JSON.stringify({ review: reviewText, rating: reviewRating }),
         }
       )
       const newReview = await response.json()
@@ -74,9 +80,20 @@ const ViewBook = () => {
       setReviews([...reviews, newReview])
       setUserReview(newReview)
       setReviewText('')
+      setReviewRating(0)
     } catch (err) {
       alert('Failed to submit review')
     }
+  }
+
+  const renderStars = (rating) => {
+    return [...Array(5)].map((_, i) => (
+      <FontAwesomeIcon
+        key={i}
+        icon={i < rating ? faStar : faStarOutline}
+        style={{ color: i < rating ? '#FFD700' : '#ccc', margin: '0 2px' }}
+      />
+    ))
   }
 
   if (loading) return <div>Loading book details...</div>
@@ -119,6 +136,9 @@ const ViewBook = () => {
               {reviews.map((review) => (
                 <li key={review.id}>
                   <strong>{review.user_name}:</strong> {review.text}
+                  <div className='review-rating'>
+                    {renderStars(review.rating)}
+                  </div>
                 </li>
               ))}
             </ul>
@@ -131,9 +151,24 @@ const ViewBook = () => {
                 onChange={(e) => setReviewText(e.target.value)}
                 placeholder='Write your review...'
               />
+              <div className='rating-input'>
+                <label>Rating:</label>
+                {[1, 2, 3, 4, 5].map((star) => (
+                  <FontAwesomeIcon
+                    key={star}
+                    icon={faStar}
+                    onClick={() => setReviewRating(star)}
+                    style={{
+                      cursor: 'pointer',
+                      color: star <= reviewRating ? '#FFD700' : '#ccc',
+                      fontSize: '1.5em',
+                    }}
+                  />
+                ))}
+              </div>
               <button
                 onClick={handleReviewSubmit}
-                disabled={!reviewText.trim()}
+                disabled={!reviewText.trim() || reviewRating === 0}
               >
                 Submit Review
               </button>

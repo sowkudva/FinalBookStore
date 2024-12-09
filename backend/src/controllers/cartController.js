@@ -32,9 +32,10 @@ export const getCartItems = async (req, res) => {
   try {
     const { userId } = extractClaims(req.user.authClaims)
     const query = `
-      SELECT c.id, c.quantity, b.book_id, b.title, b.author, b.price
+      SELECT c.id, c.quantity, b.book_id, b.title, a.name, b.price
       FROM cart c
       JOIN books b ON c.book_id = b.book_id
+      join author a on a.id = b.authorID
       WHERE c.user_id = ?
     `
     const items = await db.query(query, [userId])

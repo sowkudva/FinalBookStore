@@ -18,12 +18,19 @@
 .cart-item {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: start;
   padding: 15px;
   border: 1px solid #ddd;
   border-radius: 5px;
   background-color: #f9f9f9;
   margin-bottom: 10px;
+}
+
+.item-details {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: start;
 }
 
 .item-details h2 {

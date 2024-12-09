@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import './Cart.css'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+
+import { faTrashCan } from '@fortawesome/free-solid-svg-icons'
 
 const Cart = () => {
   const [cartItems, setCartItems] = useState([])
@@ -113,7 +116,7 @@ const Cart = () => {
                   onClick={() => handleRemoveItem(item.book_id)}
                   className='remove-item-btn'
                 >
-                  Remove
+                  <FontAwesomeIcon icon={faTrashCan} />
                 </button>
               </div>
             ))}
